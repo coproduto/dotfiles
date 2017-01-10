@@ -1,0 +1,33 @@
+--TODO: Finish grep
+
+let ghciUserCmds = [".","pwd","ls","redir","grep","hoogle"]
+
+let ghciInternalUnlines = foldl (\a -> \b -> (a++"\\n"++b)) []
+
+let ghciUserDefs arg = case arg of {"list" -> return $ "putStrLn \"" ++ (ghciInternalUnlines [":"++cmd | cmd <- ghciUserCmds]) ++ "\\n\""; "undef" -> return $ unlines [":undef "++cmd| cmd <- ghciUserCmds]; _ -> return "putStrLn \"usage: :defs {list,undef}\"" } 
+
+let cmdHelp cmd msg "-h" = return msg; cmdHelp cmd msg args = cmd args
+let runHoogle str = return $ ":! hoogle --count=10 \"" ++ str ++ "\""
+let pwd _ = return "System.Directory.getCurrentDirectory >>= putStrLn"
+let ls p = return $ "mapM_ putStrLn =<< System.Directory.getDirectoryContents "++ show path where path = if (null p) then "." else p
+
+let redir varcmd = case break Data.Char.isSpace varcmd of { (var,_:cmd) -> return $ unlines [":set -fno-print-bind-result","tmp <- System.Directory.getTemporaryDirectory","(f,h) <- System.IO.openTempFile tmp \"ghci\"","sto <- GHC.Handle.hDuplicate System.IO.stdout","GHC.Handle.hDuplicateTo h System.IO.stdout","System.IO.hClose h",cmd,"GHC.Handle.hDuplicateTo sto System.IO.stdout","let readFileNow f = readFile f >>= \\t->length t `seq` return t",var++" <- readFileNow f","System.Directory.removeFile f"]; _ -> return "putStrLn \"usage: redir <var> <cmd>\"" } 
+
+-- let { merge [] = []; merge (l:c:ls) | i c > i l = merge ((l++c):ls) where { i l = length (takeWhile Data.Char.isSpace l) }; merge (l:ls) = l:merge ls; grep patcmd = case break Data.Char.isSpace patcmd of { (pat,_:cmd) -> return $ unlines ["redir out "++cmd,"let ls = "++ if ":browse" `Data.List.isPrefixOf` cmd then "merge (lines out)"let { merge [] = [] ; merge (l:c:ls) | i c > i l  = merge ((l++c):ls) where {i l = length (takeWhile Data.Char.isSpace l)}; merge (l:ls) = l:merge ls; grep patcmd = case break Data.Char.isSpace patcmd of { (pat,_:cmd) -> return $ unlines [":redir out "++cmd,"let ls = "++if ":browse" `Data.List.isPrefixOf` cmd then "merge (lines out)" else "lines out","let match pat = Data.Maybe.isJust . Text.Regex.matchRegex (Text.Regex.mkRegex pat)","putStrLn $ unlines $ (\"\":) $ filter (match "++show pat++") $ ls"]; _ -> return "putStrLn \"usage: :grep <pat> <cmd>\"" } }
+
+let defsHelp   = "putStrLn $ \":defs {list,undef}\\t-- list or undefine user-defined commands\""
+
+let hoogleHelp = ":! hoogle --help"
+let dotHelp    = "putStrLn $ \":. <file>\\t\\t-- source commands from <file>\""
+let pwdHelp    = "putStrLn $ \":pwd\\t\\t\\t-- print working directory\""
+let lsHelp     = "putStrLn $ \":ls [<path>]\\t\\t-- list directory (current directory by default)\""
+let redirHelp  = "putStrLn $ \":redir <var> <cmd>\\t-- execute <cmd>, redirecting output to <var>\""
+let grepHelp   = "putStrLn $ \":grep <pat> <cmd>\\t-- filter lines matching <pat> from the output of <cmd>\""
+
+:def defs   cmdHelp ghciUserDefs defsHelp
+:def hoogle cmdHelp runHoogle hoogleHelp
+:def .      cmdHelp readFile dotHelp
+:def pwd    cmdHelp pwd pwdHelp
+:def ls     cmdHelp ls lsHelp 
+:def redir  cmdHelp redir redirHelp
+-- :def grep   cmdHelp grep grepHelp

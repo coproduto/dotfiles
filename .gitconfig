@@ -1,0 +1,9 @@
+[user]
+	name = Pedro Castilho
+	email = cstl.px@gmail.com
+[core]
+	editor = emacs -nw
+	autocrlf = input
+	excludesfile = /home/castilho/.gitignore
+[push]
+	default = matching
