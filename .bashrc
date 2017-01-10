@@ -19,15 +19,6 @@ if [ -f $HOME/.bash_funcs ]; then
    $HOME/.bash_funcs
 fi
 
-if [ ! -d $HOME/.dotfiles ]; then
-    mkdir $HOME/.dotfiles/
-else
-    [ -d $HOME/.dotfiles/.git ] || {
-	git init --bare $HOME/.dotfiles
-	dotfile config --local status.showUntrackedFiles no
-    }
-fi
-
 #Try to find Heroku tools
 if [ -d /usr/local/heroku ]; then
     export PATH="/usr/local/heroku/bin:$PATH"
