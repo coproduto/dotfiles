@@ -38,3 +38,4 @@ fi
 command -v opam > /dev/null 2>&1 && (eval `opam config env`) || {
     echo >&2 "OPAM was not found, so OCaml env could not be set."
 }
+
