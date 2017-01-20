@@ -2,7 +2,7 @@
 
 (setq coq-prog-args (quote ("-I" "cpdt/src")))
 (setq inhibit-startup-screen t)
-(setq wakatime-api-key "dd6a4722-6f80-4ce2-b633-ce366b1c90a0")
+(setq wakatime-api-key (getenv "WAKATIME_KEY"))
 (setq wakatime-cli-path "/usr/local/bin/wakatime")
 
 (add-to-list 'load-path "~/.emacs.d/elpa/wakatime-mode-20161019.602/")
@@ -59,5 +59,13 @@
 (add-hook 'tuareg-mode-hook 'utop-minor-mode)
 ;;----------------------------------------------------------
 
+;;JS mode---------------------------------------------------
+(setq js-indent-level 2)
+;;----------------------------------------------------------
+
+;;Wakatime--------------------------------------------------
 (load-library "wakatime-mode")
 (global-wakatime-mode)
+;;----------------------------------------------------------
+
+

@@ -26,16 +26,10 @@ else
     echo >&2 "Heroku tools were not found."
 fi
 
-# Load RVM into a shell session *as a function*w
-if [ -d $HOME/.rvm/ ]; then
-    test -s "$HOME/.rvm/scripts/rvm" && (source "$HOME/.rvm/scripts/rvm") || {
-	echo >&2 "RVM was not found, so Ruby env could not be set."
-    }
-else
-    echo >&2 "RVM directory was not found. Have you installed RVM?"
-fi
-
 command -v opam > /dev/null 2>&1 && (eval `opam config env`) || {
     echo >&2 "OPAM was not found, so OCaml env could not be set."
 }
 
+export PATH="$HOME/.rvm/bin:$PATH"
+
+source ~/.bashrc.secret
