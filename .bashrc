@@ -19,17 +19,17 @@ if [ -f $HOME/.bash_funcs ]; then
    $HOME/.bash_funcs
 fi
 
-#Try to find Heroku tools
 if [ -d /usr/local/heroku ]; then
     export PATH="/usr/local/heroku/bin:$PATH"
-else
-    echo >&2 "Heroku tools were not found."
 fi
 
-command -v opam > /dev/null 2>&1 && (eval `opam config env`) || {
-    echo >&2 "OPAM was not found, so OCaml env could not be set."
-}
+command -v opam > /dev/null 2>&1 && (eval `opam config env`)
 
 export PATH="$HOME/.rvm/bin:$PATH"
+
+ # Load RVM into a shell session *as a function*
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" && {
+    rvm use 2>&1 > /dev/null
+}
 
 source ~/.bashrc.secret
