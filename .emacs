@@ -1,21 +1,13 @@
 (require 'cl)
 
-(setq coq-prog-args (quote ("-I" "cpdt/src")))
-(setq inhibit-startup-screen t)
-(setq wakatime-api-key (getenv "WAKATIME_KEY"))
-(setq wakatime-cli-path "/usr/local/bin/wakatime")
-
-(add-to-list 'load-path "~/.emacs.d/elpa/wakatime-mode-20161019.602/")
-(require 'wakatime-mode)
-(global-wakatime-mode)
-
-(setq column-number-mode t)
-
+;;Package management
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
-(add-to-list 'auto-mode-alist '("\.scala" . scala-mode)) 
+;;File format recognition----------------------------------
+;;Scala
+(add-to-list 'auto-mode-alist '("\.scala" . scala-mode))
 (add-to-list 'auto-mode-alist '("\.sbt\'" . scala-mode))
 
 ;;fix for latex
@@ -23,11 +15,13 @@
 
 ;;GLSL
 (add-to-list 'auto-mode-alist '("\.glsl.*$" . glsl-mode))
+;;---------------------------------------------------------
 
-;;hooks for haskell
+;;Haskell mode---------------------------------------------
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;;---------------------------------------------------------
 
-;;-- Tuareg mode -----------------------------------------
+;;-- Tuareg mode ------------------------------------------
 ;;Add Tuareg to your search path
 (add-to-list 'load-path
  (expand-file-name "~/.emacs.d/elpa/tuareg-20161218.1138"))
@@ -59,6 +53,10 @@
 (add-hook 'tuareg-mode-hook 'utop-minor-mode)
 ;;----------------------------------------------------------
 
+;;R mode (ESS)----------------------------------------------
+(require 'ess-site)
+;;----------------------------------------------------------
+
 ;;Only indent with spaces-----------------------------------
 (setq-default indent-tabs-mode nil)
 ;;----------------------------------------------------------
@@ -73,8 +71,25 @@
 ;;----------------------------------------------------------
 
 ;;Wakatime--------------------------------------------------
+(setq wakatime-api-key (getenv "WAKATIME_KEY"))
+(setq wakatime-cli-path "/usr/local/bin/wakatime")
+(add-to-list 'load-path "~/.emacs.d/elpa/wakatime-mode-20161019.602/")
+(require 'wakatime-mode)
 (load-library "wakatime-mode")
 (global-wakatime-mode)
 ;;----------------------------------------------------------
 
+;;IDO-------------------------------------------------------
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+;;----------------------------------------------------------
 
+(put 'narrow-to-region 'disabled nil)
+
+(setq coq-prog-args (quote ("-I" "cpdt/src")))
+(setq inhibit-startup-screen t)
+(setq inhibit-startup-echo-area-message t)
+(setq column-number-mode t)
+
+(define-key global-map (kbd "RET") 'newline-and-indent)
