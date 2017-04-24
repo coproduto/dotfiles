@@ -15,6 +15,9 @@
 
 ;;GLSL
 (add-to-list 'auto-mode-alist '("\.glsl.*$" . glsl-mode))
+
+;;JavaScript
+(add-to-list 'auto-mode-alist '("\.js$" . js2-mode))
 ;;---------------------------------------------------------
 
 ;;Haskell mode---------------------------------------------
@@ -22,7 +25,7 @@
 ;;---------------------------------------------------------
 
 ;;-- Tuareg mode ------------------------------------------
-;;Add Tuareg to your search path
+;;Add Tuareg to search path
 (add-to-list 'load-path
  (expand-file-name "~/.emacs.d/elpa/tuareg-20161218.1138"))
 (require 'tuareg)
@@ -63,6 +66,13 @@
 
 ;;JS mode---------------------------------------------------
 (setq js-indent-level 2)
+(setq js2-basic-offset 2)
+
+;Easily enable or disable JSX support
+(eval-after-load 'js2-mode
+  '(define-key js2-mode-map (kbd "C-x x") 'js2-jsx-mode))
+(eval-after-load 'js2-mode
+  '(define-key js2-mode-map (kbd "C-x j") 'js2-mode))
 ;;----------------------------------------------------------
 
 ;;Python mode-----------------------------------------------
@@ -85,11 +95,20 @@
 (ido-mode 1)
 ;;----------------------------------------------------------
 
+;;Misc------------------------------------------------------
+;Enable narrow
 (put 'narrow-to-region 'disabled nil)
 
+;Coq stuff
 (setq coq-prog-args (quote ("-I" "cpdt/src")))
+
+;Disable startup messages
 (setq inhibit-startup-screen t)
 (setq inhibit-startup-echo-area-message t)
+
+;Enable column numbers
 (setq column-number-mode t)
 
+;Auto-indent when pressing Enter
 (define-key global-map (kbd "RET") 'newline-and-indent)
+;;----------------------------------------------------------

@@ -14,3 +14,7 @@ if [ -f ~/.bashrc ]; then
 fi
 
 . /home/castilho/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/castilho/.sdkman"
+[[ -s "/home/castilho/.sdkman/bin/sdkman-init.sh" ]] && source "/home/castilho/.sdkman/bin/sdkman-init.sh"
