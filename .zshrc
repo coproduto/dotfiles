@@ -32,7 +32,7 @@ export PATH="$HOME/.rvm/bin:$PATH"
     rvm use 2>&1 > /dev/null
 }
 
-source ~/.bashrc.secret
+source ~/.zshrc.secret
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/castilho/.sdkman"

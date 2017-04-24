@@ -9,8 +9,8 @@ command -v opam > /dev/null 2>&1 || {
     echo >&2 "OPAM was not found, so OCaml env could not be set."
 }
 
-if [ -f ~/.bashrc ]; then
-    source ~/.zshrc
-fi
-
 . /home/castilho/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+
+#Handle SDKMAN!
+export SDKMAN_DIR="/home/castilho/.sdkman"
+[[ -s "/home/castilho/.sdkman/bin/sdkman-init.sh" ]] && source "/home/castilho/.sdkman/bin/sdkman-init.sh"
