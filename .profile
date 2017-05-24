@@ -17,21 +17,6 @@ if [ -n "$BASH_VERSION" ]; then
 elif [ -n "$ZSH_VERSION" ]; then
     # include .zshrc if it exists
     if [ -f "$HOME/.zshrc" ]; then
-        . "$HOME/.bashrc"
+        . "$HOME/.zshrc"
     fi
 fi
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-
-export PATH="$HOME/.cargo/bin:$PATH"
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/castilho/.sdkman"
-[[ -s "/home/castilho/.sdkman/bin/sdkman-init.sh" ]] && source "/home/castilho/.sdkman/bin/sdkman-init.sh"
